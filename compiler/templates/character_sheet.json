@@ -1,0 +1,66 @@
+{
+    "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+            "ckpt_name": "sd_xl_base_1.0.safetensors"
+        },
+        "_meta": {"title": "Load Checkpoint"}
+    },
+    "2": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "text": "character reference sheet, multiple views, front view, side view, back view, 3/4 view, consistent character design, detailed, professional, concept art, white background, turnaround sheet",
+            "clip": ["1", 1]
+        },
+        "_meta": {"title": "Positive Prompt"}
+    },
+    "3": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "text": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, blurry, deformed, ugly, inconsistent",
+            "clip": ["1", 1]
+        },
+        "_meta": {"title": "Negative Prompt"}
+    },
+    "4": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+            "width": 1024,
+            "height": 1024,
+            "batch_size": 1
+        },
+        "_meta": {"title": "Empty Latent"}
+    },
+    "5": {
+        "class_type": "KSampler",
+        "inputs": {
+            "model": ["1", 0],
+            "positive": ["2", 0],
+            "negative": ["3", 0],
+            "latent_image": ["4", 0],
+            "seed": -1,
+            "steps": 30,
+            "cfg": 7.5,
+            "sampler_name": "euler",
+            "scheduler": "normal",
+            "denoise": 1.0
+        },
+        "_meta": {"title": "Sampler"}
+    },
+    "6": {
+        "class_type": "VAEDecode",
+        "inputs": {
+            "samples": ["5", 0],
+            "vae": ["1", 2]
+        },
+        "_meta": {"title": "VAE Decode"}
+    },
+    "7": {
+        "class_type": "SaveImage",
+        "inputs": {
+            "images": ["6", 0],
+            "filename_prefix": "character_sheet"
+        },
+        "_meta": {"title": "Save Image"}
+    }
+}

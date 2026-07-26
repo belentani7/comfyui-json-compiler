@@ -1,0 +1,81 @@
+{
+    "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+            "ckpt_name": "sd_xl_base_1.0.safetensors"
+        },
+        "_meta": {"title": "Load Checkpoint"}
+    },
+    "2": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "text": "product photography, studio lighting, white background, commercial photo, high-end product shot, clean composition, sharp focus, professional, photorealistic, 8k",
+            "clip": ["1", 1]
+        },
+        "_meta": {"title": "Positive Prompt"}
+    },
+    "3": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "text": "lowres, bad quality, blurry, noisy, text, watermark, deformed, ugly, oversaturated, underexposed, overexposed",
+            "clip": ["1", 1]
+        },
+        "_meta": {"title": "Negative Prompt"}
+    },
+    "4": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+            "width": 1024,
+            "height": 1024,
+            "batch_size": 1
+        },
+        "_meta": {"title": "Empty Latent (Square)"}
+    },
+    "5": {
+        "class_type": "KSampler",
+        "inputs": {
+            "model": ["1", 0],
+            "positive": ["2", 0],
+            "negative": ["3", 0],
+            "latent_image": ["4", 0],
+            "seed": -1,
+            "steps": 30,
+            "cfg": 7.0,
+            "sampler_name": "euler",
+            "scheduler": "normal",
+            "denoise": 1.0
+        },
+        "_meta": {"title": "Sampler"}
+    },
+    "6": {
+        "class_type": "VAEDecode",
+        "inputs": {
+            "samples": ["5", 0],
+            "vae": ["1", 2]
+        },
+        "_meta": {"title": "VAE Decode"}
+    },
+    "7": {
+        "class_type": "UpscaleModelLoader",
+        "inputs": {
+            "model_name": "RealESRGAN_x4plus.pth"
+        },
+        "_meta": {"title": "Load Upscale Model"}
+    },
+    "8": {
+        "class_type": "ImageUpscaleWithModel",
+        "inputs": {
+            "upscale_model": ["7", 0],
+            "image": ["6", 0]
+        },
+        "_meta": {"title": "Upscale 4x"}
+    },
+    "9": {
+        "class_type": "SaveImage",
+        "inputs": {
+            "images": ["8", 0],
+            "filename_prefix": "product_photo"
+        },
+        "_meta": {"title": "Save Image"}
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+            "ckpt_name": "sd_xl_base_1.0.safetensors"
+        },
+        "_meta": {"title": "Load Checkpoint"}
+    },
+    "2": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "text": "cinematic shot, film still, anamorphic lens, dramatic lighting, shallow depth of field, bokeh, color grading, film grain, 35mm, widescreen, movie scene, professional cinematography",
+            "clip": ["1", 1]
+        },
+        "_meta": {"title": "Positive Prompt"}
+    },
+    "3": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "text": "lowres, bad anatomy, text, error, cropped, worst quality, low quality, blurry, deformed, ugly, cartoon, anime, illustration, painting",
+            "clip": ["1", 1]
+        },
+        "_meta": {"title": "Negative Prompt"}
+    },
+    "4": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+            "width": 1216,
+            "height": 688,
+            "batch_size": 1
+        },
+        "_meta": {"title": "Empty Latent (2.35:1 Cinemascope)"}
+    },
+    "5": {
+        "class_type": "DepthAnythingPreprocessor",
+        "inputs": {
+            "resolution": 512
+        },
+        "_meta": {"title": "Depth Estimation"}
+    },
+    "6": {
+        "class_type": "CannyEdgePreprocessor",
+        "inputs": {
+            "low_threshold": 100,
+            "high_threshold": 200
+        },
+        "_meta": {"title": "Edge Detection"}
+    },
+    "7": {
+        "class_type": "CameraParameters",
+        "inputs": {
+            "fov": 50.0,
+            "distance": 3.0,
+            "tilt": 0.0,
+            "roll": 0.0,
+            "pan": 0.0
+        },
+        "_meta": {"title": "Camera: 50mm Portrait Lens"}
+    },
+    "8": {
+        "class_type": "KSampler",
+        "inputs": {
+            "model": ["1", 0],
+            "positive": ["2", 0],
+            "negative": ["3", 0],
+            "latent_image": ["4", 0],
+            "seed": -1,
+            "steps": 30,
+            "cfg": 8.5,
+            "sampler_name": "dpmpp_2m",
+            "scheduler": "karras",
+            "denoise": 1.0
+        },
+        "_meta": {"title": "Sampler"}
+    },
+    "9": {
+        "class_type": "VAEDecode",
+        "inputs": {
+            "samples": ["8", 0],
+            "vae": ["1", 2]
+        },
+        "_meta": {"title": "VAE Decode"}
+    },
+    "10": {
+        "class_type": "SaveImage",
+        "inputs": {
+            "images": ["9", 0],
+            "filename_prefix": "cinematic_shot"
+        },
+        "_meta": {"title": "Save Image"}
+    }
+}

@@ -1,0 +1,73 @@
+{
+    "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+            "ckpt_name": "sd_xl_base_1.0.safetensors"
+        },
+        "_meta": {"title": "Load Checkpoint"}
+    },
+    "2": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "text": "environment concept art, wide establishing shot, detailed background, atmospheric perspective, volumetric lighting, professional matte painting, cinematic composition",
+            "clip": ["1", 1]
+        },
+        "_meta": {"title": "Positive Prompt"}
+    },
+    "3": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "text": "lowres, bad anatomy, text, error, cropped, worst quality, low quality, blurry, people, characters, deformed",
+            "clip": ["1", 1]
+        },
+        "_meta": {"title": "Negative Prompt"}
+    },
+    "4": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+            "width": 1216,
+            "height": 832,
+            "batch_size": 1
+        },
+        "_meta": {"title": "Empty Latent (Landscape)"}
+    },
+    "5": {
+        "class_type": "DepthAnythingPreprocessor",
+        "inputs": {
+            "resolution": 512
+        },
+        "_meta": {"title": "Depth Estimation"}
+    },
+    "6": {
+        "class_type": "KSampler",
+        "inputs": {
+            "model": ["1", 0],
+            "positive": ["2", 0],
+            "negative": ["3", 0],
+            "latent_image": ["4", 0],
+            "seed": -1,
+            "steps": 30,
+            "cfg": 8.0,
+            "sampler_name": "dpmpp_2m",
+            "scheduler": "karras",
+            "denoise": 1.0
+        },
+        "_meta": {"title": "Sampler"}
+    },
+    "7": {
+        "class_type": "VAEDecode",
+        "inputs": {
+            "samples": ["6", 0],
+            "vae": ["1", 2]
+        },
+        "_meta": {"title": "VAE Decode"}
+    },
+    "8": {
+        "class_type": "SaveImage",
+        "inputs": {
+            "images": ["7", 0],
+            "filename_prefix": "environment"
+        },
+        "_meta": {"title": "Save Image"}
+    }
+}
