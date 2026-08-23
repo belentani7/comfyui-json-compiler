@@ -1,4 +1,4 @@
-# comfyui-json-compiler
+﻿# comfyui-json-compiler
 
 Translate natural language creative briefs into valid ComfyUI JSON workflows using LLMs.
 
@@ -6,14 +6,14 @@ Translate natural language creative briefs into valid ComfyUI JSON workflows usi
 
 This tool converts human-readable image descriptions into executable [ComfyUI](https://github.com/comfyanonymous/ComfyUI) workflows. It uses a hybrid approach:
 
-1. **Rule-based extraction** — fast, offline parsing of brief keywords (styles, camera, lighting, mood)
-2. **LLM-enhanced planning** — optional Claude integration for nuanced brief interpretation
-3. **Visual QA** — optional Qwen vision model for workflow quality assessment
+1. **Rule-based extraction** ÔÇö fast, offline parsing of brief keywords (styles, camera, lighting, mood)
+2. **LLM-enhanced planning** ÔÇö optional Claude integration for nuanced brief interpretation
+3. **Visual QA** ÔÇö optional Qwen vision model for workflow quality assessment
 
 ## Installation
 
 ```bash
-git clone https://github.com/example/comfyui-json-compiler.git
+git clone https://github.com/belentani7/comfyui-json-compiler.git
 cd comfyui-json-compiler
 pip install -e ".[dev]"
 ```
@@ -125,34 +125,34 @@ def send_to_comfyui(brief: str, server: str = "http://127.0.0.1:8188"):
 
 ```
 compiler/
-├── __init__.py           # Public API exports
-├── brief_parser.py       # NL brief → structured requirements
-├── node_mapper.py        # Requirements → ComfyUI node graph
-├── workflow_generator.py # Node graph → valid ComfyUI JSON
-├── validator.py          # JSON syntax & connection validation
-├── llm_client.py         # LLM integration (Claude + Qwen)
-└── templates/            # Pre-built workflow templates
-    ├── character_sheet.json
-    ├── environment.json
-    ├── product_photo.json
-    └── cinematic_shot.json
+Ôö£ÔöÇÔöÇ __init__.py           # Public API exports
+Ôö£ÔöÇÔöÇ brief_parser.py       # NL brief ÔåÆ structured requirements
+Ôö£ÔöÇÔöÇ node_mapper.py        # Requirements ÔåÆ ComfyUI node graph
+Ôö£ÔöÇÔöÇ workflow_generator.py # Node graph ÔåÆ valid ComfyUI JSON
+Ôö£ÔöÇÔöÇ validator.py          # JSON syntax & connection validation
+Ôö£ÔöÇÔöÇ llm_client.py         # LLM integration (Claude + Qwen)
+ÔööÔöÇÔöÇ templates/            # Pre-built workflow templates
+    Ôö£ÔöÇÔöÇ character_sheet.json
+    Ôö£ÔöÇÔöÇ environment.json
+    Ôö£ÔöÇÔöÇ product_photo.json
+    ÔööÔöÇÔöÇ cinematic_shot.json
 ```
 
 ### Pipeline
 
 ```
 Natural Language Brief
-        ↓
+        Ôåô
    brief_parser.py      (rule-based extraction)
-        ↓
+        Ôåô
    llm_client.py        (LLM enhancement, optional)
-        ↓
+        Ôåô
    node_mapper.py       (map to ComfyUI nodes)
-        ↓
+        Ôåô
    workflow_generator.py (emit valid JSON)
-        ↓
+        Ôåô
    validator.py         (verify connections & types)
-        ↓
+        Ôåô
    ComfyUI-ready workflow
 ```
 
@@ -176,4 +176,4 @@ pytest --cov=compiler
 
 ## License
 
-Apache License 2.0 — see [LICENSE](LICENSE).
+Apache License 2.0 ÔÇö see [LICENSE](LICENSE).
