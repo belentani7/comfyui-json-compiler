@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-Email: [belentani7pedro@gmail.com](mailto:belentani7pedro@gmail.com)
+Email: [belentani7studio@proton.me](mailto:belentani7studio@proton.me)
 
 Please include vulnerability details and reproduction steps.
 
